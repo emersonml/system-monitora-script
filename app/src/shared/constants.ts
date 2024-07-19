@@ -1,0 +1,21 @@
+export const carColors = [
+    'preto',
+    'branco',
+    'prata',
+    'vermelho',
+    'azul',
+    'cinza',
+    'amarelo',
+    'verde',
+    'bege',
+    'marrom',
+    'laranja',
+    'rosa',
+    'roxo',
+    'dourado',
+    'bronze',
+    'chumbo',
+    'bordô',
+    'vinho',
+    'outros'
+];

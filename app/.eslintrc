@@ -1,0 +1,89 @@
+{
+    "env": {
+        "browser": true,
+        "node": true,
+        "es2021": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@next/next/recommended",
+        "airbnb",
+        "prettier"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "plugins": ["react", "@typescript-eslint", "prettier", "eslint-plugin-import-helpers"],
+    "rules": {
+        "prettier/prettier": "off",
+        "no-console": "off",
+        "endOfLine": "off",
+        "no-shadow": "off",
+        "no-plusplus": "off",
+        "no-labels": "off",
+        "no-param-reassign": "off",
+        "no-unused-vars": "off",
+        "no-use-before-define": "off",
+        "no-restricted-syntax": "off",
+        "no-async-promise-executor": "off",
+        "no-nested-ternary": "off",
+        "default-case": "off",
+        "max-classes-per-file": "off",
+        "eqeqeq": "off",
+        "radix": "off",
+        "prefer-const": ["error", { "destructuring": "all" }],
+        "prefer-destructuring": [
+            "error",
+            {
+                "VariableDeclarator": { "object": true, "array": true },
+                "AssignmentExpression": { "object": false, "array": false }
+            }
+        ],
+        "class-methods-use-this": "off",
+        "react/require-default-props": "off",
+        "react/react-in-jsx-scope": "off",
+        "react/destructuring-assignment": "off",
+        "react/jsx-no-target-blank": "off",
+        "react/jsx-props-no-spreading": "off",
+        "react/jsx-no-bind": "off",
+        "react/function-component-definition": "off",
+        "react/jsx-no-constructed-context-values": "off",
+        "react/no-unstable-nested-components": ["warn", { "allowAsProps": true }],
+        "react/jsx-filename-extension": ["warn", { "extensions": ["ts", ".tsx"] }],
+        "jsx-a11y/click-events-have-key-events": "off",
+        "jsx-a11y/no-static-element-interactions": "off",
+        "jsx-a11y/anchor-is-valid": "off",
+        "import/prefer-default-export": "off",
+        "import/no-unresolved": "off",
+        "import/extensions": "off",
+        "import-helpers/order-imports": [
+            "warn",
+            {
+                "groups": [
+                    ["/^react$/", "/^next/"],
+                    "module",
+                    "/^@(api|components|hooks|locales|pages|services|states|styles|utils)/"
+                ],
+                "alphabetize": { "order": "asc", "ignoreCase": true },
+                "newlinesBetween": "always"
+            }
+        ],
+        "sort-imports": [
+            "warn",
+            {
+                "ignoreCase": true,
+                "ignoreDeclarationSort": true
+            }
+        ],
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "@typescript-eslint/no-var-requires": "off",
+        "@next/next/no-img-element": "off",
+        "@next/next/no-document-import-in-page": "off"
+    }
+}

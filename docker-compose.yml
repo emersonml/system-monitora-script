@@ -1,0 +1,11 @@
+
+services:
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '${SERVER_PORT}:3000'
+    volumes:
+      - /srv/volumes/system-monitora/ftp/_data:/srv/projects/ftp/

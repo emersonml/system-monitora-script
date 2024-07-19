@@ -1,0 +1,113 @@
+@import '~antd/dist/antd.less';
+@import '~antd/lib/style/themes/index.less';
+
+:root {
+    --primary: @primary-color;
+    --table-border-color: @table-border-color;
+    --border-color-base: @border-color-base;
+    --border-color-split: @border-color-split;
+    --card-background: @card-background;
+}
+
+// Modal
+.ant-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.ant-modal-confirm-btns {
+    display: flex;
+}
+
+// Menu
+.ant-menu-item,
+.ant-menu-submenu-title,
+.ant-dropdown-menu-item {
+    display: flex;
+    align-items: center;
+
+    svg {
+        margin-right: 8px;
+    }
+}
+
+// Select
+.ant-select-dropdown {
+    > div > button {
+        padding: 0 8px;
+    }
+}
+
+// Table
+.ant-table-container {
+    &:before,
+    &:after {
+        content: none !important;
+    }
+
+    .ant-table-thead {
+        .ant-table-cell {
+            &:before {
+                content: none !important;
+            }
+        }
+    }
+}
+
+// Card
+@media (max-width: 430px) {
+    .ant-card-head {
+        padding: 0 8px !important;
+    }
+
+    .ant-card-body {
+        padding: 8px !important;
+    }
+}
+
+// Form
+@media (max-width: 575px) {
+    .ant-form-item {
+        flex-wrap: nowrap;
+
+        > div {
+            flex: none !important;
+        }
+    }
+}
+
+// Input
+.ant-form-item-has-error {
+    .ant-input-password {
+        &:hover {
+            border-color: @error-color !important;
+        }
+    }
+}
+
+// Button
+.ant-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.ant-tabs-tab {
+    background-color: #f0f0f0;
+    padding: 8px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+.ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    color: black;
+}
+
+.ant-btn-primary[disabled] {
+    color: black;
+}
+
+.ant-input[disabled] {
+    color: black;
+}
