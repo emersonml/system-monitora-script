@@ -30,4 +30,4 @@ COPY .env ./
 # Copy the rest of the application code
 COPY ./app/ .
 
-CMD npm run db:push run db:generate && npm run db:seed && npm run build && npm run start
+CMD npm run db:generate && npm run build && npm run start
