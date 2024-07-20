@@ -4,8 +4,8 @@ ARG NODE_VERSION=18.16.0
 FROM node:${NODE_VERSION} as base
 
 WORKDIR /srv/projects/app
-WORKDIR /srv/projects/ftp
-WORKDIR /srv/projects/images-yolo
+RUN mkdir -p /srv/projects/ftp
+RUN mkdir -p /srv/projects/images-yolo
 
 EXPOSE 3000
 
