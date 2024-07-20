@@ -23,13 +23,12 @@ COPY app/package.json ./
 # Install dependencies
 RUN npm install
 
-COPY .env ./
+COPY .env /app
 
 # Copy the rest of the application code
 COPY ./app/ .
 
 RUN mkdir -p /srv/projects/ftp
 RUN mkdir -p /srv/projects/images-yolo
-
 
 CMD npm run db:generate && npm run build && npm run start
