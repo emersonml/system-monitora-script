@@ -1,12 +1,12 @@
 # syntax=docker/dockerfile:1
-
-
-
-ARG NODE_VERSION=14.21.3
+ARG NODE_VERSION=18.16.0
 
 FROM node:${NODE_VERSION} as base
-# WORKDIR /usr/src/app
+
 WORKDIR /srv/projects/app
+WORKDIR /srv/projects/ftp
+WORKDIR /srv/projects/images-yolo
+
 EXPOSE 3000
 
 RUN apt-get update && apt-get install -y \
@@ -20,7 +20,7 @@ RUN npm install -g prisma@4.16.2
 RUN npm install @prisma/client@3.13.0
 
 # Copy package.json and package-lock.json
-COPY app/package*.json ./
+COPY app/package.json ./
 
 # Install dependencies
 RUN npm install

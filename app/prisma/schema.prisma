@@ -1,163 +1,278 @@
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "mysql"
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-    id       String  @id @default(uuid()) @db.VarChar(36)
-    name     String  @db.Text
-    cpf      String? @db.VarChar(100)
-    email    String? @unique @db.VarChar(100)
-    phone    String? @db.VarChar(20)
-    username String? @unique @db.VarChar(100)
+  id       String  @id @default(uuid()) @db.VarChar(36)
+  email    String  @unique
+  password String
+  name     String?
+  cpf      String?  
+  phone    String? 
 
-    attachments Attachment[]
-    roleId      String?      @db.VarChar(100)
-    audits      Audit[]
+  profiles    Profile[]    @relation("profiles_users")
+  campaignItems CampaignItem[]    @relation("user_imports")
 
-    roles            Role[]   @relation("roles_users")
-    firstLogin       Boolean?
-    password         String?  @db.Text
-    passwordRecovery String?  @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-    company   Company? @relation(fields: [companyId], references: [id])
-    companyId String?  @db.VarChar(36)
-
-    @@map("users")
+  @@map("users")
 }
 
-model Role {
-    id    String @id @db.VarChar(100)
-    name  String @db.Text
-    level Int?
+model Profile {
+  id       String  @id @default(uuid()) @db.VarChar(36)
+  name String
+  description String?
 
-    users        User[]       @relation("roles_users")
-    capabilities Capability[] @relation("capabilities_roles")
+  users        User[]       @relation("profiles_users")
+  capabilities Capability[] @relation("capabilities_profiles")
+  campaigns     Campaign[]  @relation("campaigns_profiles")
+  companies     Company[]  @relation("company_profiles")
 
-    @@map("roles")
-}
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-model Cam {
-    id   String  @id @default(uuid()) @db.VarChar(36)
-    name String? @db.Text
-    path String? @db.Text
-
-    typeRecognition  String? @db.Text
-    adminInformation String? @db.Text
-    position         String? @db.Text
-
-    company   Company? @relation(fields: [companyId], references: [id])
-    companyId String?  @db.VarChar(36)
-
-    @@map("cameras")
-}
-
-model Company {
-    id   String @id @default(uuid()) @db.VarChar(36)
-    cnpj String @unique
-
-    name    String? @db.Text
-    address String? @db.Text
-    phone   String? @db.Text
-
-    cameras Cam[]
-    users   User[]
-
-    @@map("companies")
+  @@map("profiles")
 }
 
 model Capability {
-    id    String @id @db.VarChar(100)
-    roles Role[] @relation("capabilities_roles")
+  id    String @id @db.VarChar(100)
+  profiles Profile[] @relation("capabilities_profiles")
 
-    @@map("capabilities")
+  @@map("capabilities")
 }
 
-model Settings {
-    key   String @id @db.VarChar(100)
-    value String @db.Text
+model ChatHistory {
+  id            String @id @default(uuid()) @db.VarChar(36)
+  chat_history  String @db.Text
 
-    @@map("settings")
+  name          String? @db.VarChar(36)
+  cpf           String? @db.VarChar(36)
+  chat_identify String? @db.VarChar(36)
+  phone         String? @db.VarChar(36)
+  cod_chat        String? @db.VarChar(36)
+  cod_divisao   String? @db.VarChar(36)
+  cod_solicitacao  String? @db.VarChar(36)
+  cod_campanha  String? @db.VarChar(36)
+  
+
+  sendAttempts Int @default(0) // Tentativas de envio
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("blip_chat_history")
 }
 
-model Attachment {
-    id       String  @id @default(uuid()) @db.VarChar(36)
-    path     String  @db.VarChar(50)
-    filename String  @db.Text
-    typeName String? @db.Text
 
-    user   User?   @relation(fields: [userId], references: [id])
-    userId String? @db.VarChar(36)
+model Campaign {
+  id           String @id @default(uuid()) @db.VarChar(36)
+  campaignCode  String? @db.Text // Código único no multidados
 
-    @@map("attachments")
+  name         String? @db.VarChar(36)
+  url          String @db.Text
+  username     String @db.VarChar(36)
+  password     String @db.VarChar(36)
+  createFolder Boolean? @default(false)
+
+  fields Json?
+
+  campaignItems    CampaignItem[] @relation("campaign_items")
+  campaignAwards    CampaignAward[] @relation("campaigns_awards")
+  profiles    Profile[] @relation("campaigns_profiles")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("campaigns")
 }
 
-model Audit {
-    id          String          @id @default(uuid()) @db.VarChar(36)
-    date        DateTime        @default(now())
-    author      User            @relation(fields: [authorId], references: [id])
-    authorId    String          @db.VarChar(36)
-    action      AuditActionEnum
-    description String          @db.Text
-    modelId     String          @db.VarChar(36)
-    modelName   AuditModelEnum
-    ipAddress   String?         @db.Text
+model CampaignItem {
+  id           String @id @default(uuid()) @db.VarChar(36)
+  clientCode   String? @db.Text @unique
+  
+  campaign   Campaign? @relation("campaign_items", fields: [campaignId], references: [id])
+  campaignId String?    @db.VarChar(36)
 
-    @@map("audits")
+  userImport   User? @relation("user_imports", fields: [userImportId], references: [id])
+  userImportId String?    @db.VarChar(36)
+
+  items Json?
+  loadingDate DateTime?
+
+  chamadoNumber Int?
+  sendMultidadosDate DateTime?
+
+  status     CampaignItemStatusEnum @default(pending)
+  sendAttempts Int? @default(0) 
+
+  loggers Logger[] @relation("logger_campaign_items")
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("campaigns_items")
 }
 
-enum AuditActionEnum {
-    create
-    view
-    edit
-    delete
-    login
-    logout
-    custom
+model CampaignAward {
+  id           String @id @default(uuid()) @db.VarChar(36)
+  name   String? @db.Text
+  codCampaign   String? @db.Text
+  codDivision String? @db.Text
+  codSolicitation String? @db.Text
+
+  typeAward String? @db.VarChar(36)
+  
+  campaign   Campaign? @relation("campaigns_awards", fields: [campaignId], references: [id])
+  campaignId String?    @db.VarChar(36)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("campaigns_awards")
 }
 
-enum AuditModelEnum {
-    session
-    role
-    capability
-    attachment
-    user
-    employee
-    vendor
-    department
-    departmentType
-    project
-    projectType
-    task
-    folder
-    document
-    expense
-    expenseCategory
-    revenue
-    revenueCategory
-    plan
-    occurrence
-    occurrenceMotivation
-    occurrenceEnvironment
-    instrument
-    procedure
-    procedureConclusion
-    procedureType
-    person
-    nature
-    natureGroup
-    district
-    city
-    instaurationForm
-    risp
-    profession
-    gender
-    sexualOrientation
-    ethnicity
-    schooling
-    civilState
+model Logger {
+  id       String @id @default(uuid()) @db.VarChar(36)
+  type     LoggerType @default(error)
+
+  description String?  @db.Text
+  
+  campaignItem   CampaignItem? @relation("logger_campaign_items", fields: [campaignItemId], references: [id])
+  campaignItemId String?    @db.VarChar(36)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("loggers")
+}
+
+
+
+model Project {
+  id       String  @id @default(uuid()) @db.VarChar(36)
+
+  name    String?
+
+  company   Company?   @relation("project_company", fields: [companyId], references: [id])
+  companyId String? @db.VarChar(36)
+
+  fields  ProjectField[] @relation("project_fields")
+
+  active  Boolean? @default(true)
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@map("project")
+}
+
+model ProjectField {
+  id           String @id @default(uuid()) @db.VarChar(36)
+
+  field     String?
+  value     String?
+  required  Boolean?
+  typeField String?
+  
+  project   Project? @relation("project_fields", fields: [projectId], references: [id])
+  projectId String?    @db.VarChar(36)
+  
+  active  Boolean? @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("project_field")
+}
+
+model Company {
+  id       String  @id @default(uuid()) @db.VarChar(36)
+
+  cnpj String? @unique
+  name String?
+  phone    String?
+  email String?
+
+  projects Project[] @relation("project_company")
+  profiles Profile[] @relation("company_profiles")
+
+  planFixed      PlanCompany?
+  plansAdditional PlanAdditional[]
+
+  active Boolean? @default(true)
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@map("company")
+}
+
+model PlanCompany {
+  id       String @id @default(uuid()) @db.VarChar(36)
+
+  company      Company @relation(fields: [companyId], references: [id])
+  companyId    String  @unique @db.VarChar(36)
+
+  plan   Plan? @relation(fields: [planId], references: [id])
+  planId String?    @db.VarChar(36)
+
+  renovationDay Int?
+
+  active Boolean? @default(true)
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@map("plan_company")
+}
+
+model PlanAdditional {
+  id       String @id @default(uuid()) @db.VarChar(36)
+
+  company      Company @relation(fields: [companyId], references: [id])
+  companyId    String  @db.VarChar(36)
+
+  plan   Plan? @relation(fields: [planId], references: [id])
+  planId String?    @db.VarChar(36)
+
+  expirationDate DateTime?
+
+  active Boolean? @default(true)
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@map("plan_additional_company")
+}
+
+model Plan {
+  id       String  @id @default(uuid()) @db.VarChar(36)
+
+  name String
+  price Int
+
+  shotsWhatsapp Int? @default(100)
+  shotsSMS Int? @default(100)
+  shotsEmail Int? @default(100)
+
+  planCompany PlanCompany[]
+  planAddicional PlanAdditional[]
+
+  active Boolean? @default(true)
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@map("plan")
+}
+
+enum CampaignItemStatusEnum {
+  pending
+  sending
+  resend
+  completed
+}
+
+enum LoggerType {
+  info
+  error
+  warn
+  success
 }

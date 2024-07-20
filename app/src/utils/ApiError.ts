@@ -1,12 +1,12 @@
 export default class ApiError extends Error {
-    readonly message: string;
+  readonly message: string;
 
-    readonly status: number;
+  readonly status: number;
 
-    constructor(message: string, status = 400) {
-        super(message);
+  constructor(message: string, status = 400) {
+    super(message);
 
-        this.message = message;
-        this.status = status;
-    }
+    this.message = message;
+    this.status = status;
+  }
 }

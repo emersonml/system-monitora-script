@@ -1,5 +1,20 @@
-/node_modules
-/.next
+*.js
+*.json
+*.html
+*.css
+*.svg
+*.png
+*.jpg
+*.jpeg
+*.md
 
-/public/sw.*
-/public/workbox-*
+/node_modules/
+/.github/
+/.vscode/
+/public/
+/tmp/
+/build/
+/dist/
+/api/
+/coverage/
+/.cache/

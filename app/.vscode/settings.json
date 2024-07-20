@@ -1,25 +1,17 @@
 {
-    "files.exclude": {
-        "node_modules": true,
-        ".next": true,
-        "public/sw.js": true,
-        "public/workbox-*.js": true,
-        "next-env.d.ts": true
-    },
-
-    "editor.tabSize": 4,
-    "editor.formatOnSave": true,
-    "editor.insertSpaces": true,
-    "editor.wordWrapColumn": 120,
-    "editor.rulers": [120],
+    "typescript.format.semicolons": "insert",
+    "typescript.preferences.quoteStyle": "single",
+    "javascript.format.semicolons": "insert",
+    "javascript.preferences.quoteStyle": "single",
+    "editor.tabSize": 2,
+    "editor.formatOnSave": false,
     "editor.codeActionsOnSave": {
-        "source.fixAll": "explicit"
+      "source.fixAll.eslint": "explicit",
+      "source.fixAll.tslint": "explicit",
+      "source.fixAll.stylelint": "explicit"
     },
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "[html]": { "editor.defaultFormatter": "mohd-akram.vscode-html-format" },
-    "[svg]": { "editor.defaultFormatter": "jock.svg" },
-    "[prisma]": {
-        "editor.defaultFormatter": "Prisma.prisma"
-    },
-    "cSpell.words": ["conclusao", "observacao", "pixlab", "Recokigition", "sisgama", "vinculos", "Vinculos"]
-}
+    "eslint.validate": [
+      "javascript",
+      "typescript",
+    ]
+  }
