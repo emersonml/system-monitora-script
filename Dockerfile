@@ -4,8 +4,6 @@ ARG NODE_VERSION=18.16.0
 FROM node:${NODE_VERSION} as base
 
 WORKDIR /srv/projects/app
-RUN mkdir -p /srv/projects/ftp
-RUN mkdir -p /srv/projects/images-yolo
 
 EXPOSE 3000
 
@@ -29,5 +27,9 @@ COPY .env ./
 
 # Copy the rest of the application code
 COPY ./app/ .
+
+RUN mkdir -p /srv/projects/ftp
+RUN mkdir -p /srv/projects/images-yolo
+
 
 CMD npm run db:generate && npm run build && npm run start
