@@ -8,5 +8,4 @@ services:
       - '${SERVER_PORT}:3000'
     volumes:
       - /srv/volumes/system-monitora/ftp/_data:/srv/projects/ftp
-      - /srv/volumes/system-monitora/ftp/_data:/srv/projects/images-images-yolo
-      - /srv/volumes/system-monitora/ftp/_data:/srv/projects/ftp/
+      - /srv/volumes/yolo/app/img/_data:/srv/projects/images-yolo
