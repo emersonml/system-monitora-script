@@ -16,7 +16,7 @@ app.use(routes);
 
 app.get('/', (request, response) => response.json({ message: '🚀' }));
 
-const port = process.env.SERVER_PORT;
+const port = 3333;
 app.listen(port, () => {
   // eslint-disable-next-line no-console
   console.log(`Server app listening on port ${port}`);
