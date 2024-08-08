@@ -5,7 +5,10 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - '${SERVER_PORT}:3000'
+      - '${SERVER_PORT}:3333'
+    devices:
+      - "/dev/rtc:/dev/rtc:ro" # DATE
     volumes:
+      - "/etc/localtime:/etc/localtime:ro"  # DATE
       - /srv/volumes/system-monitora/ftp/_data:/srv/projects/ftp
       - /srv/volumes/system-monitora-yolo/app/img/_data:/srv/projects/images-yolo
