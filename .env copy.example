@@ -1,0 +1,8 @@
+# Database
+DATABASE_URL=postgresql://username:password@host:port/database?pool_timeout=0
+
+TOKEN_SECRET='12345678'
+TOKEN_EXPIRATION=1000000
+
+PATH_IMAGES_FTP='../ftp'
+PATH_IMAGES_YOLO='../images-yolo'

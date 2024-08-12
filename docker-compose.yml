@@ -10,5 +10,10 @@ services:
       - "/dev/rtc:/dev/rtc:ro" # DATE
     volumes:
       - "/etc/localtime:/etc/localtime:ro"  # DATE
-      - /srv/volumes/system-monitora/ftp/_data:/srv/projects/ftp
+      - shared-data:/srv/projects/ftp
+      # - /srv/volumes/system-monitora/ftp/_data:/srv/projects/ftp
       - /srv/volumes/system-monitora-yolo/app/img/_data:/srv/projects/images-yolo
+
+
+volumes:
+  shared-data:
