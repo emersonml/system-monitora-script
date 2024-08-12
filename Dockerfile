@@ -29,6 +29,6 @@ COPY .env /app
 COPY ./app/ .
 
 RUN mkdir -p /srv/projects/ftp
-RUN mkdir -p /srv/projects/images-yolo
+RUN mkdir -p /srv/projects/ftp/yolo
 
 CMD npm run db:generate && npm run build && npm run start
