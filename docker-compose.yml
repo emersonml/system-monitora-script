@@ -11,9 +11,12 @@ services:
     volumes:
       - "/etc/localtime:/etc/localtime:ro"  # DATE
       # - shared-data:/srv/projects/ftp
-      - /srv/volumes/system-monitora/ftp/_data:/srv/projects/ftp
-      - /srv/volumes/system-monitora-yolo/app/img/_data:/srv/projects/images-yolo
+      # - /srv/volumes/system-monitora/ftp/_data:/srv/projects/ftp
+      # - /srv/volumes/system-monitora-yolo/app/img/_data:/srv/projects/images-yolo
       # - /srv/volumes/system-monitora/ftp/_data/yolo:/srv/projects/images-yolo
+
+      - /srv/volumes/system-monitora-script/ftp/_data:/srv/projects/ftp
+      - /srv/volumes/system-monitora-script/yolo/_data:/srv/projects/yolo
 
 
 # volumes:
