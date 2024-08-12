@@ -16,7 +16,7 @@ services:
       # - /srv/volumes/system-monitora/ftp/_data/yolo:/srv/projects/images-yolo
 
       - /srv/volumes/system-monitora-script/ftp/_data:/srv/projects/ftp
-      - /srv/volumes/system-monitora-script/yolo/_data:/srv/projects/yolo
+      # - /srv/volumes/system-monitora-script/_data/yolo:/srv/projects/yolo
 
 
 # volumes:
